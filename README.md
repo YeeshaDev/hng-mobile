@@ -17,8 +17,8 @@ This repository contains all my mobile development tasks for the HNG program, sh
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/yeeshadev/hng-task.git
-   cd hng-task
+   git clone https://github.com/yeeshadev/hng-mobile.git
+   cd hng-mobile
    ```
 
 2. **Navigate to a Project Folder:**
