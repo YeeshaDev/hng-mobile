@@ -7,7 +7,7 @@ This repository contains all my mobile development tasks for the HNG program, sh
 1. **[Mobile Task](./mobile-task)**  
    A project designed to test knowledge in React Native and GitHub workflows.
 
-2. **[Encryption App](./secure-program)**  
+2. **[Encryption App](https://gist.github.com/YeeshaDev/c7d3d76c3b87b3d729f76cce5a67470b)**  
    An app implementing encryption and decryption algorithms using React Native.
 
 3. **[Country App](./country-app)**  
