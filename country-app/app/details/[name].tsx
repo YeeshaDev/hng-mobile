@@ -49,7 +49,7 @@ import { Skeleton } from '@/components/ui/skeleton';
         </Link>
           <ThemedText style={{ flex: 1,textAlign:'center', fontSize:20,fontWeight:'bold'}}>{country?.name}</ThemedText>
         </View>
-        <ScrollView>
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
         <Image
           source={{ uri: country?.href?.flag }}
           style={[styles.flag, { width: width - 38 }]}

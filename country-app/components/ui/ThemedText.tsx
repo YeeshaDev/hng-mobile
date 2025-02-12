@@ -22,6 +22,7 @@ export function ThemedText({
     <Text
       style={[
         { color },
+        styles.font,
         styles[type], 
         style,
       ]}
@@ -31,6 +32,9 @@ export function ThemedText({
 }
 
 const styles = StyleSheet.create({
+  font:{
+     fontFamily: 'Axiforma-Black'
+  },
   default: {
     fontSize: 16,
     lineHeight: 24,

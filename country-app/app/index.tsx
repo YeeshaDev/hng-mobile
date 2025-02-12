@@ -55,12 +55,16 @@ const sections = Object.keys(groupedCountriesByAlphabet)
     title: letter,
     data: groupedCountriesByAlphabet[letter]
   }));
-
+const ExploreLogo = isDark ? require('../assets/images/logo.png') : require('../assets/images/dark-logo.png')
 return (
   <ThemedView style={[styles.container]}>
-    <View style={{ padding: 16 }}>
+     <View style={{ padding: 16 }} >
       <View style={styles.heading}>
-        <ThemedText type='title'>Explore</ThemedText>
+      <Image 
+      source={ExploreLogo} 
+      style={{width:140, height:100}}
+      resizeMode="contain"
+    />
         <ThemeToggle/>
       </View>
       <View style={[styles.searchContainer, isDark && styles.darkInput]}>
@@ -72,12 +76,13 @@ return (
         />
         <TextInput
           style={[styles.searchInput, {color:colors.text}]}
-          placeholder="Search countries..."
+          placeholder="Search Country"
           placeholderTextColor={isDark ? '#999' : '#666'}
           value={search}
           onChangeText={setSearch}
         />
       </View>
+
       
       <View style={styles.controls}>
         <View style={styles.languageIndicator}>
@@ -97,7 +102,7 @@ return (
 </TouchableOpacity>
 
       </View>
-    </View>
+      </View>
 
     {isLoading ? (
   <Skeleton />
@@ -151,31 +156,33 @@ return (
 const styles = StyleSheet.create({
 container: {
   flex: 1,
-  paddingTop:40
+  paddingTop:40,
+  fontFamily: 'Axiforma-Black',
 },
 
 heading: {
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent:'space-between',
-  marginBottom:20,
 },
 searchContainer: {
   flexDirection: 'row',
   alignItems: 'center',
   backgroundColor: '#f0f0f0',
   borderRadius: 8,
-  paddingHorizontal: 12,
+  paddingHorizontal: 10,
   marginBottom: 12,
 },
 
 searchInput: {
   flex: 1,
   padding: 12,
+  height:55,
   fontSize: 16,
   textAlign:'center',
   borderWidth:0,
-  outlineColor:'transparent'
+  outlineColor:'transparent',
+   fontFamily: 'Axiforma-Black'
 },
 darkInput: {
   color: '#fff',
@@ -193,7 +200,7 @@ languageIndicator: {
   flexDirection:'row',
   alignItems: 'center',
   justifyContent: 'center',
-  gap:5,
+  gap:8,
   padding: 8,
   borderRadius: 8,
 },
