@@ -37,7 +37,7 @@ This mobile application allows users to:
 ### Installation
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/your-repo/country-info-app.git
+   git clone https://github.com/yeeshadev/hng-mobile/country-app.git
    cd country-info-app
    ```
 
@@ -120,5 +120,5 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## 🚀 **Live Demo**
 
-[Click Here to Test on Appetize.io](https://appetize.io/app/your-app-link)
+[Click Here to Test on Appetize.io](https://appetize.io/app/b_fimxfhnohgdo3jvdnvxr3cwqsq)
 
