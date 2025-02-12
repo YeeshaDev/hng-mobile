@@ -1,40 +1,44 @@
-# HNG Mobile App
+# HNG Mobile Tasks Repository
 
-This mobile application is part of the HNG Internship program. It provides quick access to various HNG resources and partner websites.
+This repository contains all my mobile development tasks for the HNG program, showcasing my React Native skills and problem-solving abilities.
 
-## Features
+## 📁 Repository Structure
 
-- Links to the GitHub repository
-- Access to HNG hiring pages for different developer roles
-- Links to partner websites (Telex and Delve)
+1. **[Mobile Task](./mobile-task)**  
+   A project designed to test knowledge in React Native and GitHub workflows.
 
-## HNG Backlinks
+2. **[Encryption App](./secure-program)**  
+   An app implementing encryption and decryption algorithms using React Native.
 
-- [HNG Flutter Developers](https://hng.tech/hire-flutter-developers)
-- [HNG React Native Developers](https://hng.tech/hire-react-native-developers)
-- [HNG Mobile Developers](https://hng.tech/hire-mobile-developers)
+3. **[Country App](./country-app)**  
+   A mobile application that renders information about countries using the [REST Countries API](https://restcountries.com/).
 
-## Partner Links
+## 🚀 How to Run the Projects
 
-- [Telex](https://telex.im)
-- [Delve](https://delve.fun)
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/yeeshadev/hng-task.git
+   cd hng-task
+   ```
 
-## GitHub Repository
+2. **Navigate to a Project Folder:**
+   ```bash
+   cd mobile-task  # or encryption-app, country-app
+   ```
 
-[Link to the GitHub Repository](https://github.com/yeeshadev/hng-task)
+3. **Install Dependencies:**
+   ```bash
+   npm install
+   ```
 
-## Getting Started
+4. **Run the App:**
+   ```bash
+   npx expo start --android  # For Android
+   npx expo start --ios      # For iOS
+   ```
 
-To run this project locally:
-
-1. Clone the repository
-2. Install dependencies with `npm install` or `yarn install`
-3. Run the app with `npx expo start --android` or `npx expo start --ios`
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-This project is open source and available under the [MIT License](LICENSE).
+## 🛠️ Technologies Used
+- React Native
+- JavaScript
+- REST APIs
+- Git & GitHub
