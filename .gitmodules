@@ -1,0 +1,3 @@
+[submodule "secure-program"]
+	path = secure-program
+	url = https://github.com/YeeshaDev/hng-mobile.git
