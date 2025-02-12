@@ -9,8 +9,8 @@ export const ThemeToggle = () => {
   return (
     <TouchableOpacity style={styles.button} onPress={toggleTheme}>
       <Ionicons 
-        name={isDark ? 'moon' : 'sunny'} 
-        size={24} 
+        name={isDark ? 'moon-outline' : 'sunny'} 
+        size={26} 
         color={colors.text} 
       />
     </TouchableOpacity>
