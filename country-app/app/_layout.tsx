@@ -2,10 +2,11 @@ import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { StatusBar } from 'expo-status-bar';
 import { Stack } from 'expo-router';
-import { ThemeProvider } from '@/hooks/useTheme';
+import { ThemeProvider } from '@/context/useTheme';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import {useEffect} from 'react';
+import { AppProvider } from '@/context/app-context';
 
 const queryClient = new QueryClient();
 SplashScreen.preventAutoHideAsync();
@@ -27,6 +28,7 @@ export default function RootLayout() {
   return (
     <QueryClientProvider client={queryClient}>
        <ThemeProvider>
+        <AppProvider>
         <StatusBar style='auto' />
         <Stack>
           <Stack.Screen 
@@ -34,6 +36,7 @@ export default function RootLayout() {
             options={{ headerShown: false }} 
           />
         </Stack>
+        </AppProvider>
         </ThemeProvider>
     </QueryClientProvider>
   );

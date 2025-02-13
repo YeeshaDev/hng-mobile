@@ -1,53 +1,51 @@
-import type { CountryItems } from '@/service/types';
-import { Link } from 'expo-router';
-import { View, Image, StyleSheet, Pressable } from 'react-native';
-import { ThemedText } from './ui/ThemedText';
-import { ThemeColors } from '@/constants/Colors';
+import type { Country } from "@/types";
+import { Link } from "expo-router";
+import { View, Image, StyleSheet, Pressable } from "react-native";
+import { ThemedText } from "./ui/ThemedText";
+import { ThemeColors } from "@/constants/Colors";
 
 interface CountryListItems {
-  country: CountryItems;
-  colors:ThemeColors
+  country: Country;
+  colors: ThemeColors;
 }
 
-export const CountryListItem = ({colors, country }: CountryListItems) => {
+export const CountryListItem = ({ colors, country }: CountryListItems) => {
   return (
-    <Link
-    href={`/details/${country.name}`}
-    asChild>
+    <Link href={`/details/${country.name.common}`} asChild>
       <Pressable>
-     <View
-      style={styles.container} 
-    >
-      <Image 
-        source={{ uri: country.href.flag }} 
-        style={styles.flag}
-        resizeMode="cover"
-      />
-      <View style={styles.info}>
-        <ThemedText type='defaultSemiBold' >
-          {country.name}
-        </ThemedText>
-        <ThemedText  style={[styles.capital, {color:colors.tint}]}>
-          {country.capital || 'N/A'}
-        </ThemedText>
-      </View>
-    </View>
-    </Pressable>
+        <View style={styles.container}>
+          <Image
+            source={{ uri: country.flags.png }}
+            style={styles.flag}
+            alt={country?.flags?.alt}
+            resizeMode="cover"
+          />
+          <View style={styles.info}>
+            <ThemedText type="defaultSemiBold">
+              {country.name.common}
+            </ThemedText>
+            <ThemedText style={[styles.capital, { color: colors.tint }]}>
+              {country.capital || "N/A"}
+            </ThemedText>
+          </View>
+        </View>
+      </Pressable>
     </Link>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
+    flexDirection: "row",
+    gap:4,
     padding: 12,
     borderRadius: 8,
     marginVertical: 4,
-    alignItems: 'center',
+    alignItems: "center",
   },
   flag: {
     width: 48,
-    height: 32,
+    height: 40,
     borderRadius: 4,
   },
   info: {
@@ -56,6 +54,5 @@ const styles = StyleSheet.create({
   },
   capital: {
     fontSize: 14,
-    marginTop: 2,
   },
 });

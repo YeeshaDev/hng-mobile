@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Colors } from '@/constants/Colors';
-import { useColorScheme } from './useColorScheme.web'; // Expo’s default hook
+import { useColorScheme } from '../hooks/useColorScheme.web'; // Expo’s default hook
 
 type Theme = 'light' | 'dark';
 

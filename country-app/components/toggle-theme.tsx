@@ -1,6 +1,6 @@
 import { TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useTheme } from '@/hooks/useTheme';
+import { useTheme } from '@/context/useTheme';
 
 export const ThemeToggle = () => {
   const { theme, toggleTheme, colors } = useTheme();

@@ -1,173 +1,196 @@
-import { 
-    View,  
-    Image, 
-    ScrollView, 
-    StyleSheet,
-    useWindowDimensions, 
-  } from 'react-native';
-import { useQuery } from '@tanstack/react-query';
-import { Link, useLocalSearchParams, useNavigation } from 'expo-router';
-import { CountryService } from '@/service/country-call';
-import { useEffect } from 'react';
-import { AntDesign } from '@expo/vector-icons';
-import { ThemedView } from '@/components/ui/ThemedView';
-import { ThemedText } from '@/components/ui/ThemedText';
-import { useTheme } from '@/hooks/useTheme';
-import { Skeleton } from '@/components/ui/skeleton';
-  
-  export default function CountryDetail () {
-    const { name } = useLocalSearchParams() as { name: string };
-    const {colors} = useTheme();
-    const { width } = useWindowDimensions();
-    const { data: country, isLoading } = useQuery({
-      queryKey: ['country', name], 
-      queryFn: () => CountryService.getSingleCountry(name),
-    });
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+} from "react-native";
+import { Link, useLocalSearchParams, useNavigation } from "expo-router";
+import { useEffect } from "react";
+import { AntDesign } from "@expo/vector-icons";
+import { ThemedView } from "@/components/ui/ThemedView";
+import { ThemedText } from "@/components/ui/ThemedText";
+import { useTheme } from "@/context/useTheme";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useCountries } from "@/context/app-context";
+import FlagCarousel from "@/components/flag-carousel";
 
-    const navigation = useNavigation();
-    
-      useEffect(() => {
-        navigation.setOptions({ headerShown: false });
-      }, [navigation]);
-    
-    const DetailItem = ({ label, value }: { label: string; value: string }) => (
-      <View style={styles.detailItem}>
-        <ThemedText style={styles.value}>{label}:</ThemedText>
-        <ThemedText style={[styles.label, {color:colors.tint}]}>{value}</ThemedText>
-      </View>
-    );
+export default function CountryDetail() {
+  const navigation = useNavigation();
+  const { name } = useLocalSearchParams() as { name: string };
+  const { colors } = useTheme();
+  const { countries, isLoading } = useCountries();
+
+  const country = countries.find(
+    (item) => item.name.common.toLowerCase() === name?.toLowerCase()
+  );
+
+  useEffect(() => {
+    navigation.setOptions({ headerShown: false });
+  }, [navigation]);
+
+  const DetailItem = ({ label, value }: { label: string; value: string }) => (
+    <View style={styles.detailItem}>
+      <ThemedText style={styles.value}>{label}:</ThemedText>
+      <ThemedText style={[styles.label, { color: colors.tint }]}>
+        {value}
+      </ThemedText>
+    </View>
+  );
   if (isLoading) {
-    return (
-      <Skeleton details />
-    );
+    return <Skeleton details />;
   }
-    return (
-      <ThemedView style={styles.container}>
-        <View style={{flexDirection:'row', alignItems:'center',marginVertical:13,paddingHorizontal:15,paddingVertical:40, }}>
-          <Link href='/'>
-        <AntDesign name="arrowleft" size={26} color={colors.text} />
+  return (
+    <ThemedView style={styles.container}>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          paddingHorizontal: 15,
+          paddingTop: 60,
+          paddingBottom: 8,
+        }}
+      >
+        <Link href="/">
+          <AntDesign name="arrowleft" size={26} color={colors.text} />
         </Link>
-          <ThemedText style={{ flex: 1,textAlign:'center', fontSize:20,fontWeight:'bold'}}>{country?.name}</ThemedText>
-        </View>
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
-        <Image
-          source={{ uri: country?.href?.flag }}
-          style={[styles.flag, { width: width - 38 }]}
-          resizeMode="cover"
-        />
-        
+        <ThemedText
+          style={{
+            flex: 1,
+            textAlign: "center",
+            fontSize: 20,
+            fontWeight: "bold",
+          }}
+        >
+          {country?.name.common}
+        </ThemedText>
+      </View>
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        showsVerticalScrollIndicator={false}
+      >
+       <FlagCarousel country={country} />
+
         <View style={styles.content}>
-
-        <DetailItem 
-            label="Full Name" 
-            value={country?.full_name || 'N/A'} 
-          />
-          <DetailItem 
-            label="Population" 
-            value={country?.population || 'N/A'} 
-          />
-          <DetailItem 
-            label="Size" 
-            value={country?.size || 'N/A'} 
-          />
-          <DetailItem 
-            label="Continent" 
-            value={country?.continent || 'N/A'} 
-          />
-          <DetailItem 
-            label="Phone Code" 
-            value={country?.phone_code || 'N/A'} 
-          />
-          <DetailItem 
-            label="Capital" 
-            value={country?.capital|| 'N/A'} 
-          />
-          <DetailItem 
-            label="Currency" 
-            value={country?.currency|| 'N/A'} 
-          />
-          <View style={{marginVertical:15}}>
-            <ThemedText style={styles.value}>Covid Status</ThemedText>
-            <DetailItem 
-            label="Total Case" 
-            value={country?.covid19?.total_case || 'N/A'} 
-          />
-           <DetailItem 
-            label="Total Death" 
-            value={country?.covid19?.total_deaths || 'N/A'} 
-          />
-          <DetailItem 
-          label="Last Updated" 
-          value={
-          country?.covid19?.last_updated 
-          ? new Date(country.covid19.last_updated).toISOString().split('T')[0] 
-          : 'N/A'
-          }
-          />
+          <View style={{ marginBottom: 10 }}>
+            <DetailItem
+              label="Population"
+              value={country?.population?.toLocaleString() || "N/A"}
+            />
+            <DetailItem
+              label="Continent"
+              value={country?.continents?.join(", ") || "N/A"}
+            />
+            <DetailItem label="Subregion" value={country?.subregion || "N/A"} />
+            <DetailItem
+              label="Capital"
+              value={country?.capital?.[0] || "N/A"}
+            />
           </View>
+          <View style={{ marginBottom: 10 }}>
+            <DetailItem
+              label="Official Languages"
+              value={
+                country?.languages
+                  ? Object.values(country?.languages).join(", ")
+                  : "N/A"
+              }
+            />
 
-          {country?.current_president && (
-            <View style={{marginVertical:15}}>
-            <ThemedText style={styles.value}>President Profile</ThemedText>
-            <DetailItem 
-            label="Name" 
-            value={country?.current_president?.name || 'N/A'} 
-          />
-           <DetailItem 
-            label="Gender" 
-            value={country?.current_president?.gender || 'N/A'} 
-          />
-           <DetailItem 
-            label="Appointment" 
-            value={country?.current_president?.appointment_start_date || 'N/A'} 
-          />
+            <DetailItem
+              label="Country Code"
+              value={`${country?.cca2} (${country?.cca3}) ` || "N/A"}
+            />
+            <DetailItem
+              label="Area"
+              value={`${country?.area.toLocaleString()} km²`}
+            />
+            <DetailItem
+              label="Currencies"
+              value={
+                country?.currencies
+                  ? Object.values(country?.currencies)
+                      .map((c) => `${c.name} (${c.symbol})`)
+                      .join(", ")
+                  : "N/A"
+              }
+            />
           </View>
-          )}
+          <DetailItem
+            label="Timezones"
+            value={country?.timezones.slice(0,2).join(", ") || "N/A"}
+          />
+          <DetailItem
+            label="Driving side"
+            value={country?.car?.side || "N/A"}
+          />
+          <DetailItem
+            label="Independent"
+            value={country?.independent ? "Yes" : "No"}
+          />
         </View>
-        
       </ScrollView>
-      </ThemedView>
-      
-    );
-  };
-  
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    flag: {
-      height: 300,
-      marginTop: 16,
-      flex:1,
-      justifyContent:'center',
-      marginHorizontal: 12,
-      borderRadius: 8,
-    },
-    content: {
-      padding: 16,
-    },
-    title: {
-      fontSize: 24,
-      fontWeight: 'bold',
-      marginBottom: 16,
-    },
-    detailItem: {
-      flexDirection: 'row',
-      alignItems:'center',
-      gap:10,
-      paddingVertical: 8,
-    },
-    label: {
-      fontSize: 16,
-      color: '#666',
-    },
-    centered: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    value: {
-      fontSize: 16,
-      fontWeight: '500',
-    },
-  });
+    </ThemedView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  carouselContainer: {
+    position: "relative",
+    marginHorizontal: 16,
+  },
+  carouselButton: {
+    position: "absolute",
+    top: "50%",
+    transform: [{ translateY: -20 }],
+    backgroundColor: "rgba(255, 255, 255, 0.5)",
+    backdropFilter: "blur(7px)",
+    boxShadow: "0 0px 2px #000",
+    borderRadius: 20,
+    width: 40,
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  leftButton: {
+    left: 8,
+  },
+  rightButton: {
+    right: 8,
+  },
+  flag: {
+    height: 300,
+    marginTop: 10,
+    flex: 1,
+    justifyContent: "center",
+    borderRadius: 10,
+  },
+  content: {
+    padding: 16,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 16,
+  },
+  detailItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    paddingVertical: 8,
+  },
+  label: {
+    fontSize: 16,
+    color: "#666",
+  },
+  centered: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  value: {
+    fontSize: 16,
+    fontWeight: "500",
+  },
+});
